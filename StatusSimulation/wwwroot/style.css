@@ -1,0 +1,147 @@
+﻿:root {
+    --bg-dark: #12141d;
+    --panel-bg: #1c1f2b;
+    --accent-blue: #4a90e2;
+    --text-main: #e0e0e0;
+    --text-dim: #888da8;
+    --border-color: #2e344e;
+}
+
+body {
+    background: var(--bg-dark);
+    color: var(--text-main);
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.simulator-card {
+    background: var(--panel-bg);
+    width: 700px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    overflow: hidden;
+}
+
+.app-header {
+    background: #161922;
+    padding: 15px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.app-header h1 {
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    color: var(--accent-blue);
+    margin: 0;
+}
+
+.level-badge {
+    background: #252a3a;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    border: 1px solid var(--accent-blue);
+}
+
+.level-badge input {
+    background: transparent;
+    border: none;
+    color: white;
+    width: 40px;
+    font-weight: bold;
+    text-align: center;
+    outline: none;
+}
+
+.main-layout {
+    display: flex;
+    padding: 20px;
+    gap: 20px;
+}
+
+.stat-section, .info-section { flex: 1; }
+
+.avatar-container {
+    background: #161922;
+    height: 120px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    border: 1px dashed var(--border-color);
+}
+
+.avatar-container img { height: 80px; filter: drop-shadow(0 0 5px var(--accent-blue)); }
+
+.stat-grid {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.stat-grid th {
+    text-align: left;
+    color: var(--text-dim);
+    font-size: 0.7rem;
+    padding-bottom: 10px;
+}
+
+.stat-grid td { padding: 8px 0; border-bottom: 1px solid #252a3a; }
+
+.stat-grid input {
+    background: #252a3a;
+    border: 1px solid var(--border-color);
+    color: white;
+    padding: 4px;
+    border-radius: 4px;
+    width: 45px;
+    text-align: center;
+}
+
+.status-panel {
+    background: #161922;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.status-panel h3 {
+    margin-top: 0;
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    margin-bottom: 15px;
+}
+
+.substat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-item label { font-size: 0.7rem; color: var(--text-dim); }
+.stat-item span { font-size: 0.9rem; font-weight: bold; color: var(--accent-blue); }
+
+.point-box {
+    margin-top: 20px;
+    background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    color: white;
+}
+
+.point-box small { display: block; font-size: 0.6rem; opacity: 0.8; }
+.point-box strong { font-size: 1.5rem; }

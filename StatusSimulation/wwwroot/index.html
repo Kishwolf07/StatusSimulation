@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Ragnarok Status Simulator</title>
+</head>
+<body>
+    <div class="simulator-card">
+        <header class="app-header">
+            <h1>STATUS SIMULATOR</h1>
+            <div class="level-badge">
+                <span>BASE LEVEL</span>
+                <input type="number" id="baseLv" value="1" min="1" max="99" oninput="calculate()">
+            </div>
+        </header>
+
+        <main class="main-layout">
+            <section class="stat-section">
+                <div class="avatar-container">
+                    <img src="https://file5.ratemyserver.net/chars/1/0_0.gif" id="char-sprite" alt="Novice">
+                </div>
+
+                <div class="table-wrapper">
+                    <table class="stat-grid">
+                        <thead>
+                            <tr>
+                                <th>STAT</th>
+                                <th>BASE</th>
+                                <th>BONUS</th>
+                                <th>REQ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>STR</td><td><input type="number" id="baseStr" value="1" min="1" oninput="calculate()"></td><td>+0</td><td><span id="reqStr">2</span></td></tr>
+                            <tr><td>AGI</td><td><input type="number" id="baseAgi" value="1" min="1" oninput="calculate()"></td><td>+0</td><td><span id="reqAgi">2</span></td></tr>
+                            <tr><td>VIT</td><td><input type="number" id="baseVit" value="1" min="1" oninput="calculate()"></td><td>+0</td><td><span id="reqVit">2</span></td></tr>
+                            <tr><td>INT</td><td><input type="number" id="baseInt" value="1" min="1" oninput="calculate()"></td><td>+0</td><td><span id="reqInt">2</span></td></tr>
+                            <tr><td>DEX</td><td><input type="number" id="baseDex" value="1" min="1" oninput="calculate()"></td><td>+0</td><td><span id="reqDex">2</span></td></tr>
+                            <tr><td>LUK</td><td><input type="number" id="baseLuk" value="1" min="1" oninput="calculate()"></td><td>+0</td><td><span id="reqLuk">2</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="info-section">
+                <div class="status-panel">
+                    <h3>CHARACTER STATUS</h3>
+                    <div class="substat-grid">
+                        <div class="stat-item"><label>ATK</label><span><span id="atk">1</span> + 0</span></div>
+                        <div class="stat-item"><label>MATK</label><span><span id="minMatk">1</span> ~ <span id="maxMatk">1</span></span></div>
+                        <div class="stat-item"><label>HIT</label><span id="hit">2</span></div>
+                        <div class="stat-item"><label>CRITICAL</label><span id="crit">1.0</span></div>
+                        <div class="stat-item"><label>DEF</label><span>0 + <span id="vDef">0</span></span></div>
+                        <div class="stat-item"><label>MDEF</label><span>0 + <span id="vMdef">0</span></span></div>
+                        <div class="stat-item"><label>FLEE</label><span><span id="fleeBase">2</span> + <span id="fleeBonus">1</span></span></div>
+                        <div class="stat-item"><label>ASPD</label><span id="aspd">150</span></div>
+                    </div>
+                </div>
+
+                <div class="footer-points">
+                    <div class="point-box">
+                        <small>REMAINING POINTS</small>
+                        <strong id="statPoints">48</strong>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
