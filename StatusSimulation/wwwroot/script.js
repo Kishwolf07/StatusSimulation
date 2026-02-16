@@ -1,80 +1,68 @@
-﻿/** * Ragnarok Classic Status Simulator Logic
- * Refined for high-stat accuracy and visual parity with RMS reference
- */
-
-// 1. Level x to x+1 gives floor(x/5) + 3 points
-function getPointsForLevel(level) {
-    let points = 48; // Starting points
-    for (let i = 1; i < level; i++) {
-        points += Math.floor(i / 5) + 3;
-    }
-    return points;
-}
-
-// 2. Cost to raise from x to x+1 is floor((x-1)/10) + 2
-function getStatCostTotal(baseValue) {
-    let total = 0;
-    for (let i = 1; i < baseValue; i++) {
-        total += Math.floor((i - 1) / 10) + 2;
-    }
-    return total;
-}
+﻿// iRO Wiki Classic Accuracy Update
+const character = {
+    baseLevel: 1,
+    stats: { str: 1, agi: 1, vit: 1, int: 1, dex: 1, luk: 1 }
+};
 
 function calculate() {
-    // Primary Inputs
-    const lv = parseInt(document.getElementById('baseLv').value) || 1;
-    const str = parseInt(document.getElementById('baseStr').value) || 1;
-    const agi = parseInt(document.getElementById('baseAgi').value) || 1;
-    const vit = parseInt(document.getElementById('baseVit').value) || 1;
-    const int = parseInt(document.getElementById('baseInt').value) || 1;
-    const dex = parseInt(document.getElementById('baseDex').value) || 1;
-    const luk = parseInt(document.getElementById('baseLuk').value) || 1;
-
-    // --- Point Management ---
-    const totalPoints = getPointsForLevel(lv);
-    const spent = getStatCostTotal(str) + getStatCostTotal(agi) + getStatCostTotal(vit) + 
-                  getStatCostTotal(int) + getStatCostTotal(dex) + getStatCostTotal(luk);
-    
-    const remaining = totalPoints - spent;
-    const ptDisplay = document.getElementById('statPoints');
-    ptDisplay.innerText = remaining;
-    ptDisplay.style.color = remaining < 0 ? "#ff4d4d" : "white";
-
-    // --- Requirements (Next Point Cost) ---
-    const stats = ['Str', 'Agi', 'Vit', 'Int', 'Dex', 'Luk'];
-    const vals = [str, agi, vit, int, dex, luk];
-    stats.forEach((s, i) => {
-        document.getElementById('req' + s).innerText = Math.floor((vals[i] - 1) / 10) + 2;
+    // 1. Get Inputs
+    character.baseLevel = parseInt(document.getElementById("baseLv").value) || 1;
+    ["Str", "Agi", "Vit", "Int", "Dex", "Luk"].forEach(s => {
+        character.stats[s.toLowerCase()] = parseInt(document.getElementById(`base${s}`).value) || 1;
     });
 
-    // --- Substats ---
+    const { str, agi, vit, int, dex, luk } = character.stats;
+    const bLv = character.baseLevel;
 
-    // ATK: STR + floor(STR/10)^2 + floor(DEX/5) + floor(LUK/5)
-    const atkBase = str + Math.pow(Math.floor(str / 10), 2) + Math.floor(dex / 5) + Math.floor(luk / 5);
-    document.getElementById('atk').innerText = atkBase;
+    // 2. APPLY IRO WIKI CLASSIC FORMULAS
+    // ATK = STR + (STR/10)^2 + DEX/5 + LUK/5
+    const statusAtk = str + Math.floor(Math.pow(Math.floor(str / 10), 2)) + Math.floor(dex / 5) + Math.floor(luk / 5);
 
-    // MATK: Min = INT + floor(INT/7)^2 | Max = INT + floor(INT/5)^2
-    const minMatk = int + Math.pow(Math.floor(int / 7), 2);
-    const maxMatk = int + Math.pow(Math.floor(int / 5), 2);
-    document.getElementById('minMatk').innerText = minMatk;
-    document.getElementById('maxMatk').innerText = maxMatk;
+    // MATK: Min = INT + (INT/7)^2 | Max = INT + (INT/5)^2
+    const minMatk = int + Math.floor(Math.pow(Math.floor(int / 7), 2));
+    const maxMatk = int + Math.floor(Math.pow(Math.floor(int / 5), 2));
 
-    // DEF Bonus: Based on screenshot scaling at high levels
-    document.getElementById('vDef').innerText = Math.floor(vit * 0.8);
+    // HIT = Level + DEX + LUK/3
+    const hit = bLv + dex + Math.floor(luk / 3);
 
-    // MDEF Bonus: 1 INT = 1 MDEF
-    document.getElementById('vMdef').innerText = int;
+    // FLEE = Level + AGI + LUK/5
+    const flee = bLv + agi + Math.floor(luk / 5);
 
-    // HIT: LV + DEX
-    document.getElementById('hit').innerText = lv + dex;
+    // CRIT = (LUK * 0.3) + 1
+    const crit = (luk * 0.3 + 1).toFixed(1);
 
-    // FLEE: Base = LV + AGI | Bonus = Matches the stat cost scaling (Pts Req) in reference
-    document.getElementById('fleeBase').innerText = lv + agi;
-    document.getElementById('fleeBonus').innerText = Math.floor((agi - 1) / 10) + 2;
+    // 3. STAT POINT LOGIC
+    // Points Gained: floor(level/5) + 3 per level up
+    let totalPoints = 48; // Starting points
+    for (let i = 1; i < bLv; i++) {
+        totalPoints += Math.floor(i / 5) + 3;
+    }
 
-    // CRITICAL: (LUK * 0.3) + 1
-    document.getElementById('crit').innerText = (Math.floor(luk * 0.3) + 1).toFixed(1);
+    // Cost: floor((current_stat - 1) / 10) + 2
+    let spentPoints = 0;
+    Object.values(character.stats).forEach(statVal => {
+        for (let i = 1; i < statVal; i++) {
+            spentPoints += Math.floor((i - 1) / 10) + 2;
+        }
+    });
+
+    // 4. Update UI
+    document.getElementById("atk").innerText = statusAtk;
+    document.getElementById("minMatk").innerText = minMatk;
+    document.getElementById("maxMatk").innerText = maxMatk;
+    document.getElementById("hit").innerText = hit;
+    document.getElementById("crit").innerText = crit;
+    document.getElementById("vDef").innerText = vit; // Soft DEF
+    document.getElementById("vMdef").innerText = int; // Soft MDEF
+    document.getElementById("fleeBase").innerText = bLv + agi; // Base Display
+    document.getElementById("fleeBonus").innerText = Math.floor(luk / 5); 
+    document.getElementById("statPoints").innerText = totalPoints - spentPoints;
+
+    // Update REQ costs in table
+    ["Str", "Agi", "Vit", "Int", "Dex", "Luk"].forEach(s => {
+        const currentVal = character.stats[s.toLowerCase()];
+        document.getElementById(`req${s}`).innerText = Math.floor((currentVal - 1) / 10) + 2;
+    });
 }
 
-// Initial call
 window.onload = calculate;

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Ragnarok Status Simulator</title>
+    <title>Ragnarok Status Simulator (Classic)</title>
 </head>
 <body>
     <div class="simulator-card">
@@ -33,12 +33,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr><td>STR</td><td><input type="number" id="baseStr" value="1" min="1" oninput="calculate()"></td><td>+0</td><td><span id="reqStr">2</span></td></tr>
-                            <tr><td>AGI</td><td><input type="number" id="baseAgi" value="1" min="1" oninput="calculate()"></td><td>+0</td><td><span id="reqAgi">2</span></td></tr>
-                            <tr><td>VIT</td><td><input type="number" id="baseVit" value="1" min="1" oninput="calculate()"></td><td>+0</td><td><span id="reqVit">2</span></td></tr>
-                            <tr><td>INT</td><td><input type="number" id="baseInt" value="1" min="1" oninput="calculate()"></td><td>+0</td><td><span id="reqInt">2</span></td></tr>
-                            <tr><td>DEX</td><td><input type="number" id="baseDex" value="1" min="1" oninput="calculate()"></td><td>+0</td><td><span id="reqDex">2</span></td></tr>
-                            <tr><td>LUK</td><td><input type="number" id="baseLuk" value="1" min="1" oninput="calculate()"></td><td>+0</td><td><span id="reqLuk">2</span></td></tr>
+                            <tr><td>STR</td><td><input type="number" id="baseStr" value="1" min="1" max="99" oninput="calculate()"></td><td>+0</td><td><span id="reqStr">2</span></td></tr>
+                            <tr><td>AGI</td><td><input type="number" id="baseAgi" value="1" min="1" max="99" oninput="calculate()"></td><td>+0</td><td><span id="reqAgi">2</span></td></tr>
+                            <tr><td>VIT</td><td><input type="number" id="baseVit" value="1" min="1" max="99" oninput="calculate()"></td><td>+0</td><td><span id="reqVit">2</span></td></tr>
+                            <tr><td>INT</td><td><input type="number" id="baseInt" value="1" min="1" max="99" oninput="calculate()"></td><td>+0</td><td><span id="reqInt">2</span></td></tr>
+                            <tr><td>DEX</td><td><input type="number" id="baseDex" value="1" min="1" max="99" oninput="calculate()"></td><td>+0</td><td><span id="reqDex">2</span></td></tr>
+                            <tr><td>LUK</td><td><input type="number" id="baseLuk" value="1" min="1" max="99" oninput="calculate()"></td><td>+0</td><td><span id="reqLuk">2</span></td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -54,8 +54,8 @@
                         <div class="stat-item"><label>CRITICAL</label><span id="crit">1.0</span></div>
                         <div class="stat-item"><label>DEF</label><span>0 + <span id="vDef">0</span></span></div>
                         <div class="stat-item"><label>MDEF</label><span>0 + <span id="vMdef">0</span></span></div>
-                        <div class="stat-item"><label>FLEE</label><span><span id="fleeBase">2</span> + <span id="fleeBonus">1</span></span></div>
-                        <div class="stat-item"><label>ASPD</label><span id="aspd">150</span></div>
+                        <div class="stat-item"><label>FLEE</label><span><span id="fleeBase">1</span> + <span id="fleeBonus">1</span></span></div>
+                        <div class="stat-item"><label>ASPD</label><span id="aspd">150.0</span></div>
                     </div>
                 </div>
 
