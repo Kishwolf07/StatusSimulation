@@ -3,70 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Status Simulator | Elite Edition</title>
     <link rel="stylesheet" href="style.css">
-    <title>Ragnarok Status Simulator (Classic)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="simulator-card">
-        <header class="app-header">
-            <h1>STATUS SIMULATOR</h1>
-            <div class="level-badge">
-                <span>BASE LEVEL</span>
-                <input type="number" id="baseLv" value="1" min="1" max="99" oninput="calculate()">
+    <div class="app-viewport">
+        <div class="main-container">
+            <header class="app-header">
+                <div class="brand">
+                    <div class="logo-orb"></div>
+                    <div class="title-wrap">
+                        <h1>STATUS<span>SIMULATOR</span></h1>
+                        <p>PREMIUM CHARACTER MANAGEMENT</p>
+                    </div>
+                </div>
+                <div class="level-control">
+                    <label>BASE LEVEL</label>
+                    <input type="number" id="baseLvl" value="1" min="1" max="99">
+                </div>
+            </header>
+
+            <div class="content-grid">
+                <aside class="primary-column">
+                    <div class="avatar-card">
+                        <div class="character-nav">
+                            <button class="nav-arrow" onclick="changeCharacter(-1)">&#8249;</button>
+                            <h2 id="floating-name">LORD KNIGHT</h2>
+                            <button class="nav-arrow" onclick="changeCharacter(1)">&#8250;</button>
+                        </div>
+                        <div class="sprite-display">
+                            <img src="https://i.pinimg.com/originals/e7/2b/63/e72b634231bf6fe0f94f0075b1eadf69.gif" id="main-avatar" alt="Character">
+                        </div>
+                        <div class="vitals-area">
+                            <div class="stat-bar-wrap">
+                                <div class="bar-label"><span>HEALTH POINTS</span></div>
+                                <div class="bar-bg">
+                                    <div class="bar-fill hp" id="hpBar"></div>
+                                    <span id="hpText">0 / 0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stat-editor">
+                        <div class="stat-grid-header">
+                            <span>ATTRIBUTE</span>
+                            <span>LEVEL</span>
+                            <span>COST</span>
+                        </div>
+                        <div class="attr-row" data-stat="str"><label>STR</label><div class="counter"><button class="minus">-</button><input type="number" class="stat-input" value="1"><button class="plus">+</button></div><span class="cost-tag">2</span></div>
+                        <div class="attr-row" data-stat="agi"><label>AGI</label><div class="counter"><button class="minus">-</button><input type="number" class="stat-input" value="1"><button class="plus">+</button></div><span class="cost-tag">2</span></div>
+                        <div class="attr-row" data-stat="vit"><label>VIT</label><div class="counter"><button class="minus">-</button><input type="number" class="stat-input" value="1"><button class="plus">+</button></div><span class="cost-tag">2</span></div>
+                        <div class="attr-row" data-stat="int"><label>INT</label><div class="counter"><button class="minus">-</button><input type="number" class="stat-input" value="1"><button class="plus">+</button></div><span class="cost-tag">2</span></div>
+                        <div class="attr-row" data-stat="dex"><label>DEX</label><div class="counter"><button class="minus">-</button><input type="number" class="stat-input" value="1"><button class="plus">+</button></div><span class="cost-tag">2</span></div>
+                        <div class="attr-row" data-stat="luk"><label>LUK</label><div class="counter"><button class="minus">-</button><input type="number" class="stat-input" value="1"><button class="plus">+</button></div><span class="cost-tag">2</span></div>
+                    </div>
+                </aside>
+
+                <main class="secondary-column">
+                    <div class="panel-header">COMBAT OVERVIEW</div>
+                    <div class="combat-grid">
+                        <div class="combat-box"><label>ATTACK</label><div class="val" id="atkVal">1</div></div>
+                        <div class="combat-box"><label>MAGIC ATTACK</label><div class="val"><span id="matkMin">1</span> ~ <span id="matkMax">1</span></div></div>
+                        <div class="combat-box"><label>HIT RATE</label><div class="val" id="hitVal">1</div></div>
+                        <div class="combat-box"><label>CRITICAL</label><div class="val" id="critVal">1</div></div>
+                        <div class="combat-box"><label>DEFENSE</label><div class="val"><span id="hardDef">0</span><small>+</small><span id="softDef">1</span></div></div>
+                        <div class="combat-box"><label>M. DEFENSE</label><div class="val"><span id="hardMdef">0</span><small>+</small><span id="softMdef">1</span></div></div>
+                        <div class="combat-box"><label>FLEE</label><div class="val"><span id="fleeVal">1</span><small>+</small><span id="pDodge">0</span></div></div>
+                        <div class="combat-box"><label>ASPD</label><div class="val" id="aspdVal">150</div></div>
+                    </div>
+
+                    <div class="points-panel">
+                        <label>ALLOCATION POINTS</label>
+                        <div class="point-display" id="statPoints">48</div>
+                        <button class="reset-btn" onclick="resetStats()">RESET ALL ATTRIBUTES</button>
+                    </div>
+                </main>
             </div>
-        </header>
-
-        <main class="main-layout">
-            <section class="stat-section">
-                <div class="avatar-container">
-                    <img src="https://file5.ratemyserver.net/chars/1/0_0.gif" id="char-sprite" alt="Novice">
-                </div>
-
-                <div class="table-wrapper">
-                    <table class="stat-grid">
-                        <thead>
-                            <tr>
-                                <th>STAT</th>
-                                <th>BASE</th>
-                                <th>BONUS</th>
-                                <th>REQ</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>STR</td><td><input type="number" id="baseStr" value="1" min="1" max="99" oninput="calculate()"></td><td>+0</td><td><span id="reqStr">2</span></td></tr>
-                            <tr><td>AGI</td><td><input type="number" id="baseAgi" value="1" min="1" max="99" oninput="calculate()"></td><td>+0</td><td><span id="reqAgi">2</span></td></tr>
-                            <tr><td>VIT</td><td><input type="number" id="baseVit" value="1" min="1" max="99" oninput="calculate()"></td><td>+0</td><td><span id="reqVit">2</span></td></tr>
-                            <tr><td>INT</td><td><input type="number" id="baseInt" value="1" min="1" max="99" oninput="calculate()"></td><td>+0</td><td><span id="reqInt">2</span></td></tr>
-                            <tr><td>DEX</td><td><input type="number" id="baseDex" value="1" min="1" max="99" oninput="calculate()"></td><td>+0</td><td><span id="reqDex">2</span></td></tr>
-                            <tr><td>LUK</td><td><input type="number" id="baseLuk" value="1" min="1" max="99" oninput="calculate()"></td><td>+0</td><td><span id="reqLuk">2</span></td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-
-            <section class="info-section">
-                <div class="status-panel">
-                    <h3>CHARACTER STATUS</h3>
-                    <div class="substat-grid">
-                        <div class="stat-item"><label>ATK</label><span><span id="atk">1</span> + 0</span></div>
-                        <div class="stat-item"><label>MATK</label><span><span id="minMatk">1</span> ~ <span id="maxMatk">1</span></span></div>
-                        <div class="stat-item"><label>HIT</label><span id="hit">2</span></div>
-                        <div class="stat-item"><label>CRITICAL</label><span id="crit">1.0</span></div>
-                        <div class="stat-item"><label>DEF</label><span>0 + <span id="vDef">0</span></span></div>
-                        <div class="stat-item"><label>MDEF</label><span>0 + <span id="vMdef">0</span></span></div>
-                        <div class="stat-item"><label>FLEE</label><span><span id="fleeBase">1</span> + <span id="fleeBonus">1</span></span></div>
-                        <div class="stat-item"><label>ASPD</label><span id="aspd">150.0</span></div>
-                    </div>
-                </div>
-
-                <div class="footer-points">
-                    <div class="point-box">
-                        <small>REMAINING POINTS</small>
-                        <strong id="statPoints">48</strong>
-                    </div>
-                </div>
-            </section>
-        </main>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>
